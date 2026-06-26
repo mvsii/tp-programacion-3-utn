@@ -25,10 +25,21 @@ if (!($tipo_doc === 'PASAPORTE' || $tipo_doc === 'DNI')) {
     exit();
 }
 
-$sql = "INSERT INTO usuarios (documento, tipo_doc, nombre, apellido, fecha_nacimiento, email, usuario, password) values ('$documento', '$tipo_doc', '$nombre', '$apellido', '$fecha_nacimiento', '$email', '$usuario', '$passwordA')";
+$sql = "SELECT * FROM usuarios WHERE documento = '$documento'";
+
+$resul = $conn->query($sql);
+
+$fila = $resul->fetch_assoc();
+
+if (!$fila) {
+    echo "<p>El documento no esta asociado a ningun usuario";
+    exit();
+}
+
+$sql = "UPDATE usuarios SET usuario = '$usuario', password = '$passwordA' where documento = '$documento'";
 
 if ($conn->query($sql) === true) {
-    echo "<h2> La cuenta se creo correctamente</h2>";
+    echo "<h2> La cuenta se registro correctamente</h2>";
     echo "<a href='ingreso.html'> Iniciar Sesion </a>";
 } else {
     echo "<p>Error al intentar crear la cuenta: " . $conn->error;
