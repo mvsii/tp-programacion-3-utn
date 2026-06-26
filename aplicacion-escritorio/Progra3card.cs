@@ -1,11 +1,11 @@
 using System;
-using MySql.Data.MySqlClient; 
+using MySql.Data.MySqlClient;
 
 namespace Progra3Card.Administrativo
 {
     class Program
     {
-        private static string connectionString = "Server=localhost;Database=mi_banco_db;Uid=root;Pwd=;";
+        private static string connectionString = "Server=localhost;Database=mi_banco_db;Uid=root;Pwd=root;";
 
         static void Main(string[] args)
         {
@@ -53,7 +53,7 @@ namespace Progra3Card.Administrativo
             // === A realizar ===
             // Aquí deben implementar un SELECT sobre la tabla 'tarjetas'
             // para recorrer las filas e imprimirlas en la consola.
-            
+
             ObtenerYMostrarTarjetas();
 
             Console.WriteLine("\nPresione una tecla para volver al menú...");
@@ -70,7 +70,7 @@ namespace Progra3Card.Administrativo
             // === A realizar ===
             // Aquí deben realizar un SELECT con un JOIN entre 'tarjetas' y 'usuarios' 
             // filtrando por el numCuenta para traer todos los campos (Nombre, Apellido, Email, Saldo, etc.)
-            
+
             MostrarDetalleCompleto(numCuenta);
 
             Console.WriteLine("\nPresione una tecla para volver al menú...");
@@ -88,14 +88,14 @@ namespace Progra3Card.Administrativo
             Console.WriteLine("\n⚠️ ADVERTENCIA: Se eliminará la tarjeta, sus liquidaciones y los datos de acceso web vinculados.");
             Console.ResetColor();
             Console.Write("¿Está seguro de continuar? (S/N): ");
-            
+
             if (Console.ReadLine().ToUpper() == "S")
             {
                 // === A realizar ===
                 // Aquí deben ejecutar un DELETE sobre la tabla 'tarjetas' donde num_cuenta = numCuenta.
                 // Como definimos ON DELETE CASCADE en la base de datos, las liquidaciones se borrarán solas.
                 // Opcional: Evaluar si también eliminan al usuario de la tabla 'usuarios' o si lo mantienen.
-                
+
                 bool exito = DarDeBajaTarjeta(numCuenta);
 
                 if (exito)
