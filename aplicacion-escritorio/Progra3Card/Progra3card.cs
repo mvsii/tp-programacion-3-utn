@@ -5,7 +5,7 @@ namespace Progra3Card.Administrativo
 {
     class Program
     {
-        private static string connectionString = "Server=localhost;Database=mi_banco_db;Uid=root;Pwd=root;";
+        private static string connectionString = "Server=localhost;Port=3306;Database=mi_banco_db;Uid=root;Pwd=root;";
 
         static void Main(string[] args)
         {
@@ -42,6 +42,20 @@ namespace Progra3Card.Administrativo
         }
 
         // Funciones a completar:
+
+        // -- ESTA FUNCION NO ESTABA EN EL ARCHIVO BASE! --
+        static void MenuEmitirTarjeta()
+        {
+            Console.Clear();
+            Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+            Console.WriteLine("numero de cuenta: ");
+            Console.WriteLine("Numero de la tarjeta: ");
+            Console.WriteLine("Banco emisor:");
+            Console.WriteLine("Estado de la tarjeta: ");
+            Console.WriteLine("Saldo inicial: ");
+            Console.WriteLine("DNI del titular: ");
+        }
+        // -- ESTA FUNCION NO ESTABA EN EL ARCHIVO BASE! --
 
         static void MenuListarTarjetas()
         {
@@ -89,7 +103,9 @@ namespace Progra3Card.Administrativo
             Console.ResetColor();
             Console.Write("¿Está seguro de continuar? (S/N): ");
 
-            if (Console.ReadLine().ToUpper() == "S")
+            // El signo de pregunta despues del ReadLine hace la comparacion solo si no es nulo,
+            // caso contrario el if daria false
+            if (Console.ReadLine()?.ToUpper() == "S")
             {
                 // === A realizar ===
                 // Aquí deben ejecutar un DELETE sobre la tabla 'tarjetas' donde num_cuenta = numCuenta.
@@ -111,6 +127,12 @@ namespace Progra3Card.Administrativo
             Console.WriteLine("\nPresione una tecla para volver al menú...");
             Console.ReadKey();
         }
+        // -- ESTA FUNCION NO ESTABA EN EL ARCHIVO BASE! --
+        static void MenuEmitirLiquidacion()
+        {
+
+        }
+        // -- ESTA FUNCION NO ESTABA EN EL ARCHIVO BASE! --
 
 
         // =========================================================================
