@@ -141,9 +141,28 @@ namespace Progra3Card.Administrativo
 
         static void ObtenerYMostrarTarjetas()
         {
-            // Completar 
+            // Completar
             // Ejemplo de impresión dentro del bucle: 
             // Console.WriteLine("{0,-12} {1,-18} {2,-20} {3,-15}", reader["num_cuenta"], reader["numero_tarjeta"], ...);
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT * FROM tarjetas";
+                using (MySqlCommand comando = new MySqlCommand(query, conn))
+                {
+                    using (MySqlDataReader lector = comando.ExecuteReader())
+                    {
+                        while (lector.Read())
+                        {
+                            Console.WriteLine("{0,-12} {1,-18} {2,-20} {3,-15}",
+                                lector["num_cuenta"],
+                                lector["numero_tarjeta"],
+                                lector["banco_emisor"],
+                                lector["dni_titular"]);
+                        }
+                    }
+                }
+            }
         }
 
         static void MostrarDetalleCompleto(int cuenta)
