@@ -202,6 +202,19 @@ namespace Progra3Card.Administrativo
         static bool DarDeBajaTarjeta(int cuenta)
         {
             // Completar usando un DELETE FROM tarjetas WHERE num_cuenta = @cuenta
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string delete = "DELETE FROM tarjetas WHERE num_cuenta = @cuenta";
+                using (MySqlCommand comando = new MySqlCommand(delete, conn))
+                {
+                    comando.Parameters.AddWithValue("@cuenta", cuenta);
+                    int filasAfectadas = comando.ExecuteNonQuery();
+                    if (filasAfectadas > 0)
+                        return true;
+                }
+            }
+
             return false;
         }
     }
