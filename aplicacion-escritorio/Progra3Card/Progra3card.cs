@@ -168,6 +168,35 @@ namespace Progra3Card.Administrativo
         static void MostrarDetalleCompleto(int cuenta)
         {
             // Completar haciendo un SELECT con JOIN de usuarios y tarjetas WHERE num_cuenta = @cuenta
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT u.nombre, u.apellido, u.documento, u.email, t.num_cuenta, t.numero_tarjeta, t.banco_emisor, t.estado, t.saldo FROM tarjetas t JOIN usuarios u ON t.dni_titular = u.documento WHERE t.num_cuenta = @cuenta";
+                using (MySqlCommand comando = new MySqlCommand(query, conn))
+                {
+                    comando.Parameters.AddWithValue("@cuenta", cuenta);
+
+                    using (MySqlDataReader lector = comando.ExecuteReader())
+                    {
+                        Console.WriteLine(new string('=', 150));
+                        Console.WriteLine("{0,-15}|{1,-15}|{2,-10}|{3,-35}|{4,-11}|{5,-17}|{6,-15}|{7,-9}|{8,-13}", "Nombre", "Apellido", "Documento", "Email", "NumCuenta", "NumTarjeta", "Banco", "Estado", "Saldo");
+                        Console.WriteLine(new string('=', 150));
+                        while (lector.Read())
+                        {
+                            Console.WriteLine("{0,-15}|{1,-15}|{2,-10}|{3,-35}|{4,-11}|{5,-17}|{6,-15}|{7,-9}|{8,-13}",
+                                lector["nombre"],
+                                lector["apellido"],
+                                lector["documento"],
+                                lector["email"],
+                                lector["num_cuenta"],
+                                lector["numero_tarjeta"],
+                                lector["banco_emisor"],
+                                lector["estado"],
+                                lector["saldo"]);
+                        }
+                    }
+                }
+            }
         }
 
         static bool DarDeBajaTarjeta(int cuenta)
