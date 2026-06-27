@@ -11,32 +11,40 @@ $usuario = $_POST['usuario'];
 $passwordA = $_POST['passwordA'];
 $passwordB = $_POST['passwordB'];
 
-// Validacion de la password.
+// Validacion de la password
 if (!($passwordA === $passwordB)) {
     echo "<h2> Las contraseñas no coinciden</h2>";
     echo "<a href='registro.html'> Volver </a>";
     exit();
 }
 
-// Validacion del tipo de documento para evitar request manual.
+// Validacion del tipo de documento para evitar request manual
 if (!($tipo_doc === 'PASAPORTE' || $tipo_doc === 'DNI')) {
     echo "<h2> El tipo de documento es invalido</h2>";
     echo "<a href='registro.html'> Volver </a>";
     exit();
 }
 
-$sql = "SELECT * FROM usuarios WHERE documento = '$documento'";
+// Consulta para validar si el usuario tiene una tarjeta
+$sql = "SELECT dni_titual
+        FROM tarjetas
+        WHERE dni_titular = '$documento'";
 
-$resul = $conn->query($sql);
+$result = $conn->query($sql);
 
-$fila = $resul->fetch_assoc();
+$fila = $result->fetch_assoc();
 
+// Validacion rapida
 if (!$fila) {
     echo "<p>El documento no esta asociado a ningun usuario";
+    echo "<a href='registro.html'> Volver al registro </a>";
     exit();
 }
 
-$sql = "UPDATE usuarios SET usuario = '$usuario', password = '$passwordA' where documento = '$documento'";
+// Consulta para modificar y terminar de registrar el usuario
+$sql = "UPDATE usuarios 
+        SET usuario = '$usuario', password = '$passwordA' 
+        WHERE documento = '$documento'";
 
 if ($conn->query($sql) === true) {
     echo "<h2> La cuenta se registro correctamente</h2>";
