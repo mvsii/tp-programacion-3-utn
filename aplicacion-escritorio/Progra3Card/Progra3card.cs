@@ -48,12 +48,122 @@ namespace Progra3Card.Administrativo
         {
             Console.Clear();
             Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
-            Console.WriteLine("numero de cuenta: ");
+            //-- Datos para la tabla Usuarios
+            Console.WriteLine("-- +-8 Digitos --");
+            Console.WriteLine("Documento del Usuario : ");
+            string documento = Console.ReadLine() ?? "";
+
+            //--> DIVISION POR DATO <--
+            Console.Clear();
+            Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+            Console.WriteLine("--- PASAPORTE o DNI ---");
+            Console.WriteLine("Tipo del Documento: ");
+            string tipoDocumento = Console.ReadLine() ?? "";
+            //-- Verificacion para que el tipo de documento sea PASAPORTE o DNI
+            while (!(tipoDocumento == "DNI" || tipoDocumento == "PASAPORTE"))
+            {
+                Console.Clear();
+                Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+                Console.WriteLine("--> El tipo de documento es erroneo, tiene que ser PASAPORTE o DNI obligatoriamente <--");
+                Console.WriteLine("Tipo del Documento: ");
+                tipoDocumento = Console.ReadLine() ?? "";
+            }
+
+            //--> DIVISION POR DATO <--
+            Console.Clear();
+            Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+            Console.WriteLine("Nombre del Usuario:");
+            string nombre = Console.ReadLine() ?? "";
+
+            //--> DIVISION POR DATO <--
+            Console.Clear();
+            Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+            Console.WriteLine("Apellido del Usuario: ");
+            string apellido = Console.ReadLine() ?? "";
+            //--> DIVISION POR DATO <--
+            Console.Clear();
+            Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+            Console.WriteLine("--- Formato YYYY-MM-DD ---");
+            Console.WriteLine("Fecha de Nacimiento del Usuario: ");
+
+            //-- Tipo DateTime, el parse es para convertir el string del ReadLine en una fecha
+            DateTime fechaNacimiento = DateTime.Parse(Console.ReadLine() ?? "");
+
+            //--> DIVISION POR DATO <--
+            Console.Clear();
+            Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+            Console.WriteLine("Email del Usuario: ");
+            string email = Console.ReadLine() ?? "";
+
+            //--> DIVISION POR DATO <--
+            Console.Clear();
+            Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+
+            //-- Datos para la tabla Tarjetas
+            Console.WriteLine("-- 4 Digitos --");
+            Console.WriteLine("Numero de cuenta: ");
+            string numCuenta = Console.ReadLine() ?? "";
+
+            //--> DIVISION POR DATO <--
+            Console.Clear();
+            Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+            Console.WriteLine("-- 16 Digitos --");
             Console.WriteLine("Numero de la tarjeta: ");
-            Console.WriteLine("Banco emisor:");
+            string numTarjeta = Console.ReadLine() ?? "";
+
+            //--> DIVISION POR DATO <--
+            Console.Clear();
+            Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+            Console.WriteLine("-- Banco Nación - Banco Provincia - Banco Galicia - Banco Santander - Banco BBVA - Banco Macro --");
+            Console.Write("Banco emisor: ");
+            string banco = Console.ReadLine() ?? "";
+            //-- Validacion para que el banco sea alguno valido
+            while (!(banco == "Banco Nación" || banco == "Banco Provincia" || banco == "Banco Galicia" || banco == "Banco Santander" || banco == "Banco BBVA" || banco == "Banco Macro"))
+            {
+                Console.Clear();
+                Console.WriteLine("Banco invalido. Opciones: Banco Nación, Banco Provincia, Banco Galicia, Banco Santander, Banco BBVA, Banco Macro");
+                Console.Write("Banco emisor: ");
+                banco = Console.ReadLine() ?? "";
+            }
+
+            //--> DIVISION POR DATO <--
+            Console.Clear();
+            Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+            Console.WriteLine("-- Activa o Bloqueada --");
             Console.WriteLine("Estado de la tarjeta: ");
+            string estado = Console.ReadLine() ?? "";
+            //-- Validacion para que el estado de la tarjeta sea alguno valido
+            while (!(estado == "Activa" || estado == "Bloqueada"))
+            {
+                Console.Clear();
+                Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+                Console.WriteLine("--> El valor del Estado de la tarjeta es erroneo, tiene que ser Activa o Bloqueada obligatoriamente <--");
+                Console.WriteLine("Estado de la tarjeta: ");
+                estado = Console.ReadLine() ?? "";
+            }
+
+            //--> DIVISION POR DATO <--
+            Console.Clear();
+            Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
             Console.WriteLine("Saldo inicial: ");
+            decimal saldo = Convert.ToDecimal(Console.ReadLine());
+
+            //--> DIVISION POR DATO <--
+            Console.Clear();
+            Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+            Console.WriteLine("-- +-8 Digitos --");
+            Console.WriteLine("-- Documento previo: " + documento);
             Console.WriteLine("DNI del titular: ");
+            string dni = Console.ReadLine() ?? "";
+
+            InsertarTarjeta(documento, tipoDocumento, nombre, apellido, fechaNacimiento, email, numCuenta, numTarjeta, banco, estado, saldo, dni);
+
+            Console.Clear();
+            Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+            Console.WriteLine("\nUsuario y Tarjeta creados con exito!");
+
+            Console.WriteLine("\nPresione una tecla para volver al menú...");
+            Console.ReadKey();
         }
         // -- ESTA FUNCION NO ESTABA EN EL ARCHIVO BASE! --
 
@@ -217,5 +327,35 @@ namespace Progra3Card.Administrativo
 
             return false;
         }
+
+        // -- ESTE METODO NO ESTABA EN EL ARCHIVO BASE! --
+        static bool InsertarTarjeta(string documento, string tipoDocumento, string nombre, string apellido, DateTime fechaNacimiento, string email, string numCuenta, string numTarjeta, string banco, string estado, decimal saldo, string dni)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string insert = "INSERT INTO usuarios (documento, tipo_doc, nombre, apellido, fecha_nacimiento, email) VALUES (@documento, @tipoDocumento, @nombre, @apellido, @fechaNacimiento, @email); INSERT INTO tarjetas (num_cuenta, numero_tarjeta, banco_emisor, estado, saldo, dni_titular) VALUES (@numCuenta, @numTarjeta, @banco, @estado, @saldo, @dni)";
+
+                using (MySqlCommand comando = new MySqlCommand(insert, conn))
+                {
+                    comando.Parameters.AddWithValue("@documento", documento);
+                    comando.Parameters.AddWithValue("@tipoDocumento", tipoDocumento);
+                    comando.Parameters.AddWithValue("@nombre", nombre);
+                    comando.Parameters.AddWithValue("@apellido", apellido);
+                    // El AddWithValue espera un String por alguna razon, transformando la fecha en un string se soluciona el problema
+                    comando.Parameters.AddWithValue("@fechaNacimiento", fechaNacimiento.ToString("yyyy-MM-dd"));
+                    comando.Parameters.AddWithValue("@email", email);
+                    comando.Parameters.AddWithValue("@numCuenta", numCuenta);
+                    comando.Parameters.AddWithValue("@numTarjeta", numTarjeta);
+                    comando.Parameters.AddWithValue("@banco", banco);
+                    comando.Parameters.AddWithValue("@estado", estado);
+                    comando.Parameters.AddWithValue("@saldo", saldo);
+                    comando.Parameters.AddWithValue("@dni", dni);
+
+                    return comando.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+        // -- ESTE METODO NO ESTABA EN EL ARCHIVO BASE! --
     }
 }
