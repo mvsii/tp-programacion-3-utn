@@ -26,7 +26,7 @@ if (!($tipo_doc === 'PASAPORTE' || $tipo_doc === 'DNI')) {
 }
 
 // Consulta para validar si el usuario tiene una tarjeta
-$sql = "SELECT dni_titual
+$sql = "SELECT dni_titular
         FROM tarjetas
         WHERE dni_titular = '$documento'";
 
@@ -42,22 +42,37 @@ if (!$fila) {
 }
 
 // Consulta para validar si los datos ingresados concuerdan con algun usuario creado
-$sql = "SELECT tipo_doc, documento, nombre, apellido, fecha_nacimiento, email
+$sql = "SELECT tipo_doc, nombre, apellido, fecha_nacimiento, email
         FROM usuarios
-        WHERE documento = '$documento'
-            AND tipo_doc = '$tipo_doc'
-            AND documento = '$nombre'
-            AND apellido = '$apellido'
-            AND fecha_nacimiento = '$fecha_nacimiento'
-            AND email = '$email'";
+        WHERE documento = '$documento'";
 
 $result = $conn->query($sql);
 
 $fila = $result->fetch_assoc();
 
-// Validacion rapida
-if (!$fila) {
-    echo "<p>Los datos ingresados no son correctos";
+// Validaciones especificas para cada campo (es para un menos tedioso)
+if (!($fila['tipo_doc'] === $tipo_doc)) {
+    echo "<p>El tipo del documento es incorrecto";
+    echo "<a href='registro.html'> Volver al registro </a>";
+    exit();
+}
+if (!($fila['nombre'] === $nombre)) {
+    echo "<p>El nombre ingresado es incorrecto";
+    echo "<a href='registro.html'> Volver al registro </a>";
+    exit();
+}
+if (!($fila['apellido'] === $apellido)) {
+    echo "<p>El apellido ingresado es incorrecto";
+    echo "<a href='registro.html'> Volver al registro </a>";
+    exit();
+}
+if (!($fila['fecha_nacimiento'] === $fecha_nacimiento)) {
+    echo "<p>La fecha de nacimiento ingresada es incorrecta";
+    echo "<a href='registro.html'> Volver al registro </a>";
+    exit();
+}
+if (!($fila['email'] === $email)) {
+    echo "<p>El email ingresado es incorrecto";
     echo "<a href='registro.html'> Volver al registro </a>";
     exit();
 }
