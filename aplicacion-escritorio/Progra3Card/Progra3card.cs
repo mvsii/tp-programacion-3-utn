@@ -50,14 +50,14 @@ namespace Progra3Card.Administrativo
             Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
             //-- Datos para la tabla Usuarios
             Console.WriteLine("-- +-8 Digitos --");
-            Console.WriteLine("Documento del Usuario : ");
+            Console.Write("Documento del Usuario : ");
             string documento = Console.ReadLine() ?? "";
 
             //--> DIVISION POR DATO <--
             Console.Clear();
             Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
             Console.WriteLine("--- PASAPORTE o DNI ---");
-            Console.WriteLine("Tipo del Documento: ");
+            Console.Write("Tipo del Documento: ");
             string tipoDocumento = Console.ReadLine() ?? "";
             //-- Verificacion para que el tipo de documento sea PASAPORTE o DNI
             while (!(tipoDocumento == "DNI" || tipoDocumento == "PASAPORTE"))
@@ -65,26 +65,26 @@ namespace Progra3Card.Administrativo
                 Console.Clear();
                 Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
                 Console.WriteLine("--> El tipo de documento es erroneo, tiene que ser PASAPORTE o DNI obligatoriamente <--");
-                Console.WriteLine("Tipo del Documento: ");
+                Console.Write("Tipo del Documento: ");
                 tipoDocumento = Console.ReadLine() ?? "";
             }
 
             //--> DIVISION POR DATO <--
             Console.Clear();
             Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
-            Console.WriteLine("Nombre del Usuario:");
+            Console.Write("Nombre del Usuario: ");
             string nombre = Console.ReadLine() ?? "";
 
             //--> DIVISION POR DATO <--
             Console.Clear();
             Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
-            Console.WriteLine("Apellido del Usuario: ");
+            Console.Write("Apellido del Usuario: ");
             string apellido = Console.ReadLine() ?? "";
             //--> DIVISION POR DATO <--
             Console.Clear();
             Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
             Console.WriteLine("--- Formato YYYY-MM-DD ---");
-            Console.WriteLine("Fecha de Nacimiento del Usuario: ");
+            Console.Write("Fecha de Nacimiento del Usuario: ");
 
             //-- Tipo DateTime, el parse es para convertir el string del ReadLine en una fecha
             DateTime fechaNacimiento = DateTime.Parse(Console.ReadLine() ?? "");
@@ -92,7 +92,7 @@ namespace Progra3Card.Administrativo
             //--> DIVISION POR DATO <--
             Console.Clear();
             Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
-            Console.WriteLine("Email del Usuario: ");
+            Console.Write("Email del Usuario: ");
             string email = Console.ReadLine() ?? "";
 
             //--> DIVISION POR DATO <--
@@ -101,14 +101,14 @@ namespace Progra3Card.Administrativo
 
             //-- Datos para la tabla Tarjetas
             Console.WriteLine("-- 4 Digitos --");
-            Console.WriteLine("Numero de cuenta: ");
+            Console.Write("Numero de cuenta: ");
             string numCuenta = Console.ReadLine() ?? "";
 
             //--> DIVISION POR DATO <--
             Console.Clear();
             Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
             Console.WriteLine("-- 16 Digitos --");
-            Console.WriteLine("Numero de la tarjeta: ");
+            Console.Write("Numero de la tarjeta: ");
             string numTarjeta = Console.ReadLine() ?? "";
 
             //--> DIVISION POR DATO <--
@@ -130,7 +130,7 @@ namespace Progra3Card.Administrativo
             Console.Clear();
             Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
             Console.WriteLine("-- Activa o Bloqueada --");
-            Console.WriteLine("Estado de la tarjeta: ");
+            Console.Write("Estado de la tarjeta: ");
             string estado = Console.ReadLine() ?? "";
             //-- Validacion para que el estado de la tarjeta sea alguno valido
             while (!(estado == "Activa" || estado == "Bloqueada"))
@@ -138,14 +138,15 @@ namespace Progra3Card.Administrativo
                 Console.Clear();
                 Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
                 Console.WriteLine("--> El valor del Estado de la tarjeta es erroneo, tiene que ser Activa o Bloqueada obligatoriamente <--");
-                Console.WriteLine("Estado de la tarjeta: ");
+                Console.Write("Estado de la tarjeta: ");
                 estado = Console.ReadLine() ?? "";
             }
 
             //--> DIVISION POR DATO <--
             Console.Clear();
             Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
-            Console.WriteLine("Saldo inicial: ");
+            Console.Write("Saldo inicial: ");
+            //-- Convert a decimal, el ReadLine siempre espera un string
             decimal saldo = Convert.ToDecimal(Console.ReadLine());
 
             //--> DIVISION POR DATO <--
@@ -153,14 +154,22 @@ namespace Progra3Card.Administrativo
             Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
             Console.WriteLine("-- +-8 Digitos --");
             Console.WriteLine("-- Documento previo: " + documento);
-            Console.WriteLine("DNI del titular: ");
+            Console.Write("DNI del titular: ");
             string dni = Console.ReadLine() ?? "";
 
-            InsertarTarjeta(documento, tipoDocumento, nombre, apellido, fechaNacimiento, email, numCuenta, numTarjeta, banco, estado, saldo, dni);
+            if (InsertarTarjeta(documento, tipoDocumento, nombre, apellido, fechaNacimiento, email, numCuenta, numTarjeta, banco, estado, saldo, dni))
+            {
+                Console.Clear();
+                Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+                Console.WriteLine("\nUsuario y Tarjeta creados con exito!");
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
+                Console.WriteLine("Error: El usuario y la Tarjeta no fueron agregados correctamente");
+            }
 
-            Console.Clear();
-            Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
-            Console.WriteLine("\nUsuario y Tarjeta creados con exito!");
 
             Console.WriteLine("\nPresione una tecla para volver al menú...");
             Console.ReadKey();
@@ -240,7 +249,34 @@ namespace Progra3Card.Administrativo
         // -- ESTA FUNCION NO ESTABA EN EL ARCHIVO BASE! --
         static void MenuEmitirLiquidacion()
         {
+            Console.Clear();
+            Console.WriteLine("--- EMITIR LIQUIDACION ---");
+            Console.Write("Numero de Cuenta: ");
+            string numCuenta = Console.ReadLine() ?? "";
+            Console.Write("Periodo de Liquidacion: ");
+            string periodoLiquidacion = Console.ReadLine() ?? "";
+            Console.Write("Vencimiento: ");
+            DateTime fechaVencimiento = DateTime.Parse(Console.ReadLine() ?? "");
+            Console.Write("Total a pagar: ");
+            decimal pagoTotal = Convert.ToDecimal(Console.ReadLine());
+            Console.Write("Pago minimo: ");
+            decimal pagoMinimo = Convert.ToDecimal(Console.ReadLine());
 
+            if (AgregarLiquidacion(numCuenta, periodoLiquidacion, fechaVencimiento, pagoTotal, pagoMinimo))
+            {
+                Console.Clear();
+                Console.WriteLine("--- EMITIR LIQUIDACION ---");
+                Console.WriteLine("Liquidacion agregada correctamente!");
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("--- EMITIR LIQUIDACION ---");
+                Console.WriteLine("Error: La liquidacion no pudo ser agregada");
+            }
+
+            Console.WriteLine("\nPresione una tecla para volver al menú...");
+            Console.ReadKey();
         }
         // -- ESTA FUNCION NO ESTABA EN EL ARCHIVO BASE! --
 
@@ -319,13 +355,10 @@ namespace Progra3Card.Administrativo
                 using (MySqlCommand comando = new MySqlCommand(delete, conn))
                 {
                     comando.Parameters.AddWithValue("@cuenta", cuenta);
-                    int filasAfectadas = comando.ExecuteNonQuery();
-                    if (filasAfectadas > 0)
-                        return true;
+
+                    return comando.ExecuteNonQuery() > 0;
                 }
             }
-
-            return false;
         }
 
         // -- ESTE METODO NO ESTABA EN EL ARCHIVO BASE! --
@@ -342,8 +375,7 @@ namespace Progra3Card.Administrativo
                     comando.Parameters.AddWithValue("@tipoDocumento", tipoDocumento);
                     comando.Parameters.AddWithValue("@nombre", nombre);
                     comando.Parameters.AddWithValue("@apellido", apellido);
-                    // El AddWithValue espera un String por alguna razon, transformando la fecha en un string se soluciona el problema
-                    comando.Parameters.AddWithValue("@fechaNacimiento", fechaNacimiento.ToString("yyyy-MM-dd"));
+                    comando.Parameters.AddWithValue("@fechaNacimiento", fechaNacimiento);
                     comando.Parameters.AddWithValue("@email", email);
                     comando.Parameters.AddWithValue("@numCuenta", numCuenta);
                     comando.Parameters.AddWithValue("@numTarjeta", numTarjeta);
@@ -351,6 +383,28 @@ namespace Progra3Card.Administrativo
                     comando.Parameters.AddWithValue("@estado", estado);
                     comando.Parameters.AddWithValue("@saldo", saldo);
                     comando.Parameters.AddWithValue("@dni", dni);
+
+                    return comando.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+        // -- ESTE METODO NO ESTABA EN EL ARCHIVO BASE! --
+
+        // -- ESTE METODO NO ESTABA EN EL ARCHIVO BASE! --
+        static bool AgregarLiquidacion(string numCuenta, string periodoLiquidacion, DateTime fechaVencimiento, decimal pagoTotal, decimal pagoMinimo)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string insert = "INSERT INTO liquidaciones (num_cuenta, periodo, fecha_vencimiento, total_a_pagar, pago_minimo) VALUES (@numCuenta, @periodoLiquidacion, @fechaVencimiento, @pagoTotal, @pagoMinimo)";
+
+                using (MySqlCommand comando = new MySqlCommand(insert, conn))
+                {
+                    comando.Parameters.AddWithValue("@numCuenta", numCuenta);
+                    comando.Parameters.AddWithValue("@periodo", periodoLiquidacion);
+                    comando.Parameters.AddWithValue("@fechaVencimiento", fechaVencimiento);
+                    comando.Parameters.AddWithValue("@pagoTotal", pagoTotal);
+                    comando.Parameters.AddWithValue("@pagoMinimo", pagoMinimo);
 
                     return comando.ExecuteNonQuery() > 0;
                 }
