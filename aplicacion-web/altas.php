@@ -36,7 +36,28 @@ $fila = $result->fetch_assoc();
 
 // Validacion rapida
 if (!$fila) {
-    echo "<p>El documento no esta asociado a ningun usuario";
+    echo "<p>El documento no esta asociado a ninguna tarjeta";
+    echo "<a href='registro.html'> Volver al registro </a>";
+    exit();
+}
+
+// Consulta para validar si los datos ingresados concuerdan con algun usuario creado
+$sql = "SELECT tipo_doc, documento, nombre, apellido, fecha_nacimiento, email
+        FROM usuarios
+        WHERE documento = '$documento'
+            AND tipo_doc = '$tipo_doc'
+            AND documento = '$nombre'
+            AND apellido = '$apellido'
+            AND fecha_nacimiento = '$fecha_nacimiento'
+            AND email = '$email'";
+
+$result = $conn->query($sql);
+
+$fila = $result->fetch_assoc();
+
+// Validacion rapida
+if (!$fila) {
+    echo "<p>Los datos ingresados no son correctos";
     echo "<a href='registro.html'> Volver al registro </a>";
     exit();
 }
