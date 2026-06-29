@@ -95,14 +95,7 @@ namespace Progra3Card.Administrativo
             Console.Write("Email del Usuario: ");
             string email = Console.ReadLine() ?? "";
 
-            //--> DIVISION POR DATO <--
-            Console.Clear();
-            Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
-
             //-- Datos para la tabla Tarjetas
-            Console.WriteLine("-- 4 Digitos --");
-            Console.Write("Numero de cuenta: ");
-            string numCuenta = Console.ReadLine() ?? "";
 
             //--> DIVISION POR DATO <--
             Console.Clear();
@@ -157,7 +150,7 @@ namespace Progra3Card.Administrativo
             Console.Write("DNI del titular: ");
             string dni = Console.ReadLine() ?? "";
 
-            if (InsertarTarjeta(documento, tipoDocumento, nombre, apellido, fechaNacimiento, email, numCuenta, numTarjeta, banco, estado, saldo, dni))
+            if (InsertarTarjeta(documento, tipoDocumento, nombre, apellido, fechaNacimiento, email, numTarjeta, banco, estado, saldo, dni))
             {
                 Console.Clear();
                 Console.WriteLine("--- EMITIR NUEVA TARJETA ---");
@@ -362,12 +355,12 @@ namespace Progra3Card.Administrativo
         }
 
         // -- InsertarTarjeta() NO ESTABA EN EL ARCHIVO BASE! --
-        static bool InsertarTarjeta(string documento, string tipoDocumento, string nombre, string apellido, DateTime fechaNacimiento, string email, string numCuenta, string numTarjeta, string banco, string estado, decimal saldo, string dni)
+        static bool InsertarTarjeta(string documento, string tipoDocumento, string nombre, string apellido, DateTime fechaNacimiento, string email, string numTarjeta, string banco, string estado, decimal saldo, string dni)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string insert = "INSERT INTO usuarios (documento, tipo_doc, nombre, apellido, fecha_nacimiento, email) VALUES (@documento, @tipoDocumento, @nombre, @apellido, @fechaNacimiento, @email); INSERT INTO tarjetas (num_cuenta, numero_tarjeta, banco_emisor, estado, saldo, dni_titular) VALUES (@numCuenta, @numTarjeta, @banco, @estado, @saldo, @dni)";
+                string insert = "INSERT INTO usuarios (documento, tipo_doc, nombre, apellido, fecha_nacimiento, email) VALUES (@documento, @tipoDocumento, @nombre, @apellido, @fechaNacimiento, @email); INSERT INTO tarjetas (numero_tarjeta, banco_emisor, estado, saldo, dni_titular) VALUES (@numTarjeta, @banco, @estado, @saldo, @dni)";
 
                 using (MySqlCommand comando = new MySqlCommand(insert, conn))
                 {
@@ -377,7 +370,6 @@ namespace Progra3Card.Administrativo
                     comando.Parameters.AddWithValue("@apellido", apellido);
                     comando.Parameters.AddWithValue("@fechaNacimiento", fechaNacimiento);
                     comando.Parameters.AddWithValue("@email", email);
-                    comando.Parameters.AddWithValue("@numCuenta", numCuenta);
                     comando.Parameters.AddWithValue("@numTarjeta", numTarjeta);
                     comando.Parameters.AddWithValue("@banco", banco);
                     comando.Parameters.AddWithValue("@estado", estado);
