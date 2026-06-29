@@ -35,8 +35,6 @@ $result_tarjetas = $conn->query($sql_tarjetas);
             </h1>
             <div class="flex items-center gap-4">
                 <span class="text-sm">Hola, <?php echo htmlspecialchars($_SESSION['nombre']); ?></span>
-                <a href="logout.php"
-                    class="text-sm bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full transition">Salir</a>
             </div>
         </div>
     </header>
