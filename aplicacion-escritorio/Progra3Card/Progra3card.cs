@@ -246,12 +246,20 @@ namespace Progra3Card.Administrativo
             Console.WriteLine("--- EMITIR LIQUIDACION ---");
             Console.Write("Numero de Cuenta: ");
             string numCuenta = Console.ReadLine() ?? "";
+            Console.Clear();
+            Console.WriteLine("--- EMITIR LIQUIDACION ---");
             Console.Write("Periodo de Liquidacion: ");
             string periodoLiquidacion = Console.ReadLine() ?? "";
+            Console.Clear();
+            Console.WriteLine("--- EMITIR LIQUIDACION ---");
             Console.Write("Vencimiento: ");
             DateTime fechaVencimiento = DateTime.Parse(Console.ReadLine() ?? "");
+            Console.Clear();
+            Console.WriteLine("--- EMITIR LIQUIDACION ---");
             Console.Write("Total a pagar: ");
             decimal pagoTotal = Convert.ToDecimal(Console.ReadLine());
+            Console.Clear();
+            Console.WriteLine("--- EMITIR LIQUIDACION ---");
             Console.Write("Pago minimo: ");
             decimal pagoMinimo = Convert.ToDecimal(Console.ReadLine());
 
