@@ -43,7 +43,7 @@ namespace Progra3Card.Administrativo
 
         // Funciones a completar:
 
-        // -- ESTA FUNCION NO ESTABA EN EL ARCHIVO BASE! --
+        // -- MenuEmitirTarjeta() NO ESTABA EN EL ARCHIVO BASE! --
         static void MenuEmitirTarjeta()
         {
             Console.Clear();
@@ -174,7 +174,7 @@ namespace Progra3Card.Administrativo
             Console.WriteLine("\nPresione una tecla para volver al menú...");
             Console.ReadKey();
         }
-        // -- ESTA FUNCION NO ESTABA EN EL ARCHIVO BASE! --
+        // -- MenuEmitirTarjeta() NO ESTABA EN EL ARCHIVO BASE! --
 
         static void MenuListarTarjetas()
         {
@@ -246,7 +246,7 @@ namespace Progra3Card.Administrativo
             Console.WriteLine("\nPresione una tecla para volver al menú...");
             Console.ReadKey();
         }
-        // -- ESTA FUNCION NO ESTABA EN EL ARCHIVO BASE! --
+        // -- MenuEmitirLiquidacion() NO ESTABA EN EL ARCHIVO BASE! --
         static void MenuEmitirLiquidacion()
         {
             Console.Clear();
@@ -278,7 +278,7 @@ namespace Progra3Card.Administrativo
             Console.WriteLine("\nPresione una tecla para volver al menú...");
             Console.ReadKey();
         }
-        // -- ESTA FUNCION NO ESTABA EN EL ARCHIVO BASE! --
+        // -- MenuEmitirLiquidacion() NO ESTABA EN EL ARCHIVO BASE! --
 
 
         // =========================================================================
@@ -361,7 +361,7 @@ namespace Progra3Card.Administrativo
             }
         }
 
-        // -- ESTE METODO NO ESTABA EN EL ARCHIVO BASE! --
+        // -- InsertarTarjeta() NO ESTABA EN EL ARCHIVO BASE! --
         static bool InsertarTarjeta(string documento, string tipoDocumento, string nombre, string apellido, DateTime fechaNacimiento, string email, string numCuenta, string numTarjeta, string banco, string estado, decimal saldo, string dni)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -388,9 +388,9 @@ namespace Progra3Card.Administrativo
                 }
             }
         }
-        // -- ESTE METODO NO ESTABA EN EL ARCHIVO BASE! --
+        // -- InsertarTarjeta() NO ESTABA EN EL ARCHIVO BASE! --
 
-        // -- ESTE METODO NO ESTABA EN EL ARCHIVO BASE! --
+        // -- AgregarLiquidacion() NO ESTABA EN EL ARCHIVO BASE! --
         static bool AgregarLiquidacion(string numCuenta, string periodoLiquidacion, DateTime fechaVencimiento, decimal pagoTotal, decimal pagoMinimo)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -410,6 +410,6 @@ namespace Progra3Card.Administrativo
                 }
             }
         }
-        // -- ESTE METODO NO ESTABA EN EL ARCHIVO BASE! --
+        // -- AgregarLiquidacion() NO ESTABA EN EL ARCHIVO BASE! --
     }
 }
