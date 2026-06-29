@@ -324,9 +324,9 @@ namespace Progra3Card.Administrativo
 
                     using (MySqlDataReader lector = comando.ExecuteReader())
                     {
-                        Console.WriteLine(new string('=', 150));
+                        Console.WriteLine(new string('=', 141));
                         Console.WriteLine("{0,-15}|{1,-15}|{2,-10}|{3,-35}|{4,-11}|{5,-17}|{6,-15}|{7,-9}|{8,-13}", "Nombre", "Apellido", "Documento", "Email", "NumCuenta", "NumTarjeta", "Banco", "Estado", "Saldo");
-                        Console.WriteLine(new string('=', 150));
+                        Console.WriteLine(new string('=', 141));
                         while (lector.Read())
                         {
                             Console.WriteLine("{0,-15}|{1,-15}|{2,-10}|{3,-35}|{4,-11}|{5,-17}|{6,-15}|{7,-9}|{8,-13}",
@@ -401,7 +401,7 @@ namespace Progra3Card.Administrativo
                 using (MySqlCommand comando = new MySqlCommand(insert, conn))
                 {
                     comando.Parameters.AddWithValue("@numCuenta", numCuenta);
-                    comando.Parameters.AddWithValue("@periodo", periodoLiquidacion);
+                    comando.Parameters.AddWithValue("@periodoLiquidacion", periodoLiquidacion);
                     comando.Parameters.AddWithValue("@fechaVencimiento", fechaVencimiento);
                     comando.Parameters.AddWithValue("@pagoTotal", pagoTotal);
                     comando.Parameters.AddWithValue("@pagoMinimo", pagoMinimo);
